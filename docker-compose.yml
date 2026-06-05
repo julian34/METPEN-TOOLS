@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  metpen-ai-lab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: metpen-ai-lab-container
+    ports:
+      # Menggunakan port 8891 untuk menghindari konflik dengan container lain
+      # Format: HOST_PORT:CONTAINER_PORT
+      - "8891:8891"
+    volumes:
+      # Mount folder proyek agar perubahan tersinkronisasi
+      - .:/workspace
+      # Volume untuk menyimpan data Jupyter
+      - jupyter-data:/root/.jupyter
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    working_dir: /workspace
+
+volumes:
+  jupyter-data:
+    name: metpen-jupyter-data

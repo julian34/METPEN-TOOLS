@@ -1,0 +1,124 @@
+# AI Agent Instructions for metpen-ai-lab
+
+## Project Overview
+
+**metpen-ai-lab** is a reproducible VS Code + Dev Container + Python/Jupyter lab for teaching **research methods with responsible AI assistance**.
+
+- **Language**: Indonesian (student-facing content); English for technical identifiers, code, and configuration
+- **Scope**: 7-notebook learning progression covering data loading, cleaning, visualization, statistics, and case studies
+- **Core principle**: Students use AI as a learning tool while maintaining critical thinking, code verification, and transparent methodology
+
+## Key Implementation Guardrails
+
+Read [metpen-ai-lab.md](metpen-ai-lab.md) § 0 before making any changes. These rules are non-negotiable:
+
+1. **Do not invent requirements.** Only create files and folders listed in the plan.
+2. **Do not invent data provenance.** Never claim synthetic data is real or from unverified sources.
+3. **Synthetic data must be labeled synthetic everywhere.** Never present it as empirical evidence.
+4. **Use relative paths only.** No personal machine paths (`C:\...`, `/Users/...`, `/home/...`).
+5. **Keep notebooks beginner-friendly.** Prefer clear Markdown explanations over complex code.
+6. **Do not add optional tools unless listed.** No extra frameworks, dashboards, databases, or unexplained dependencies.
+7. **When uncertain, create a placeholder with TODO** instead of guessing.
+8. **Prioritize reproducibility over completeness.** A working, taught-through lab is the goal.
+9. **No public publishing, GitHub Classroom, autograding, or advanced CI** until first implementation passes.
+10. **Do not use `postCreateCommand` for dependency installation.** Dependencies go in `.devcontainer/Dockerfile`.
+
+## Responsible AI Usage in This Workspace
+
+This project teaches students how to use AI responsibly. Agents should model this:
+
+### AI Can Help With
+
+- Explaining code in methodological context ([prompts/prompt_01_explain_code.md](prompts/prompt_01_explain_code.md))
+- Choosing between methods and justifying selection ([prompts/prompt_02_choose_method.md](prompts/prompt_02_choose_method.md))
+- Interpreting results and connecting to theory ([prompts/prompt_03_interpret_results.md](prompts/prompt_03_interpret_results.md))
+- Reflecting on limitations and assumptions ([prompts/prompt_04_reflect_on_limitations.md](prompts/prompt_04_reflect_on_limitations.md))
+- Improving clarity of student writing and notebook structure
+
+### AI Must NOT
+
+- Fabricate data origins or methodological decisions
+- Replace student verification and critical thinking
+- Present synthetic data as real evidence
+- Skip explanation of assumptions and risks
+
+See [docs/02-ai-usage-policy.md](docs/02-ai-usage-policy.md) for the full student-facing policy.
+
+## Workspace Structure & Conventions
+
+```
+notebooks/             Learning progression (00_orientation → 06_case_study_template)
+data/
+  ├── raw/            Raw data inputs (to be downloaded from verified sources)
+  ├── synthetic/       Algorithmically-generated practice data (labeled as such)
+  └── processed/       Clean outputs from notebook execution
+docs/                  Setup, AI policy, and troubleshooting
+prompts/               Reusable AI prompt templates
+templates/             Student-facing templates (AI usage log, interpretation, etc.)
+scripts/               Automated task scripts (data generation, testing)
+tests/                 Project integrity checks (test_imports.py, test_project_files.py)
+.devcontainer/         Docker configuration (dependencies in Dockerfile, not postCreateCommand)
+```
+
+### Learning Progression
+
+1. **00_orientation.ipynb** — Setup confirmation, environment check, responsible AI introduction
+2. **01_data_loading.ipynb** — Load, inspect, and understand dataset structure
+3. **02_data_quality_cleaning.ipynb** — Identify and fix data quality issues
+4. **03_exploratory_analysis.ipynb** — Visualizations and initial patterns
+5. **04_descriptive_statistics.ipynb** — Central tendency, spread, distributions
+6. **05_correlation_regression.ipynb** — Bivariate relationships and simple regression
+7. **06_case_study_template.ipynb** — Mini case study combining all previous skills
+
+## Common Tasks
+
+### Adding or Modifying a Notebook
+
+1. **Keep notebook names, structure, and language consistent** with existing notebooks.
+2. **Start each notebook with clear learning outcomes** (see 00_orientation cell "Hasil pembelajaran").
+3. **Include Markdown explanations before complex code cells.**
+4. **Use relative paths only** (e.g., `../data/processed/...`, not `C:\...`).
+5. **Test notebooks locally in Dev Container** before finalizing.
+6. **If a notebook generates output data, place it in `data/processed/`.**
+7. **Never claim synthetic data is real** (mark outputs clearly as "generated from synthetic_student_performance.csv").
+
+### Updating Data
+
+1. **Synthetic data** is in [data/synthetic/synthetic_student_performance.csv](data/synthetic/synthetic_student_performance.csv) and generated by [scripts/generate_synthetic_student_data.py](scripts/generate_synthetic_student_data.py).
+2. **Do not add real data** without explicit user request and verification of source.
+3. **All synthetic datasets** must include a note: _"This dataset is synthetically generated for learning purposes and does not represent real student data."_
+
+### Testing & Validation
+
+- Run tests before completing work: `pytest tests/` (inside Dev Container)
+- Check that `test_imports.py` passes (required libraries installed)
+- Check that `test_project_files.py` passes (expected files and structure exist)
+
+### Dev Container Workflow
+
+1. **Build happens via `.devcontainer/Dockerfile`**, not `postCreateCommand`.
+2. **If `requirements.txt` changes, rebuild the image** (do not modify postCreateCommand).
+3. **Always work inside the Dev Container** for consistency.
+4. **Notebooks and code should work for any user who builds the Dev Container.**
+
+## When to Ask for Clarification
+
+Ask the user before proceeding if:
+
+- **Language**: Student-facing content should be in Indonesian unless user specifies otherwise
+- **New dependencies**: User must approve before adding to `requirements.txt`
+- **Real data**: User must provide verified source and license
+- **Scope changes**: If user asks for features not in metpen-ai-lab.md § 1–3, clarify scope
+- **Structural changes**: Adding new folder types or reorganizing existing notebooks
+
+## Links to Key Resources
+
+- [metpen-ai-lab.md](metpen-ai-lab.md) — Full implementation plan and guardrails
+- [docs/02-ai-usage-policy.md](docs/02-ai-usage-policy.md) — Student-facing responsible AI policy
+- [prompts/](prompts/) — Reusable prompt templates for students
+- [README.md](README.md) — Quick-start guide for students
+
+---
+
+**Last updated:** 2026-05-22  
+**Target**: Reproducible, beginner-friendly research methods lab with transparent AI assistance

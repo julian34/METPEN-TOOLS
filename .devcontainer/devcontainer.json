@@ -8,6 +8,7 @@
     	]
 	},
 	"runArgs": [
+    	"--name=metpen-container",
     	"--init",
     	"--network=host"
 	],
